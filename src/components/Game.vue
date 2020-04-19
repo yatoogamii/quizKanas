@@ -23,8 +23,11 @@
 
     step = 1;
     score = this.finalRules.score;
-    allQuestions = this.finalRules.kanasList;
     answer = "";
+
+    get allQuestions() {
+      return this.finalRules.kanasList.slice();
+    }
 
     validatedAnswer() {
       if (
@@ -49,11 +52,10 @@
       this.answer = "";
     }
 
-    @Watch("allQuestions")
+    @Watch("step")
     onPropertyChanged(value: any[], oldValue: any[]) {
-      if (value.length === 0) {
+      if (value - 1 === this.finalRules.score) {
         const wantRetry = confirm("Voulez vous recommener ?");
-        console.log(wantRetry);
         if (wantRetry) {
           this.step = 1;
           this.score = this.finalRules.score;
